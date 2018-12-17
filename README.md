@@ -1,2 +1,1 @@
-# qap
-Solving a Quadratic Assignment Problem using genetic algorithms in Python3
+# Solving a Quadratic Assignment Problem using genetic algorithms in Python3
