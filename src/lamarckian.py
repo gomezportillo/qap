@@ -1,8 +1,10 @@
 
-class Lamarckian:
+from genetic_algorithm import GeneticAlgorithm
+
+class Lamarckian(GeneticAlgorithm):
 
     def __init__(self):
-        pass
+        super(Lamarckian, self).__init__()
 
     def execute(self):
-        print("Executing lamarckian...")
+        print("Executing lamarckian...{}".format( self.SIZE ))

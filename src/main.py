@@ -14,7 +14,6 @@ lamarckian = Lamarckian()
 
 
 def execute_algorithm( algorithm ):
-    print ("[MAIN] Executing standard")
     start_time = time.time()
     algorithm.execute()
     return time.time() - start_time
