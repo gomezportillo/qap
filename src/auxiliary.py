@@ -1,6 +1,7 @@
 import os
 import time
 
+from genetic_algorithm import GeneticAlgorithm
 
 def get_data_files( dir ):
     """
@@ -13,6 +14,13 @@ def get_data_files( dir ):
 
 
 def execute_algorithm( algorithm, datafile ):
-    start_time = time.time()
-    algorithm.execute( datafile )
-    return time.time() - start_time
+    """
+    Executes an algorithm and returns its computing time
+    """
+    if issubclass(type(algorithm), GeneticAlgorithm):
+        start_time = time.time()
+        algorithm.execute( datafile )
+        return time.time() - start_time
+
+    else:
+        raise AssertionError('The variable is not a subclass of GeneticAlgorithm')
