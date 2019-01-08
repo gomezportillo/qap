@@ -5,9 +5,7 @@ from baldwinian import Baldwinian
 from lamarckian import Lamarckian
 
 
-DATA_DIR = os.path.join('src', 'data', 'qap')
-
-standard = Standard()
+standard   = Standard()
 baldwinian = Baldwinian()
 lamarckian = Lamarckian()
 
