@@ -12,26 +12,35 @@ class Standard(GeneticAlgorithm):
 
 
     def execute(self, datafile):
-        print("Executing standard...")
+        """
+        Executes standard genetic algorithm
+        """
+        print("Executing standard with file {}".format(datafile))
+
         super().load( datafile )
-
-        # print("File {}\nSize {}".format(datafile, self.problem_size))
-        # for line in self.flow_matrix:
-        #     print(line)
-        # for line in self.distance_matrix:
-        #     print(line)
-
-        generations = []
-        for i in range(self.NUMBER_OF_GENERATIONS):
-            generation = super().create_population()
-            generation.append( generation )
+        generation = super().create_population()
+        self.calculate_fitness( generation )
 
 
-    def calculate_fitness(self):
-        fitness = 0
+    def calculate_fitness(self, generation):
+        """
+        Calculate the fitness of each individual on the generation
+        """
+        for individual in generation:
+            new_fitness = 0
+            for i in range(self.problem_size):
+                for j in range(self.problem_size):
+                    chrom_i = individual.chromosome[i]
+                    chrom_j = individual.chromosome[j]
 
-        for i in range(self.problem_size):
-            for j in range(self.problem_size):
-                fitness += self.flow_matrix[i][j] * self.distance_matrix[i][j]
+                    new_fitness += self.flow_matrix[i][j] * \
+                                   self.distance_matrix[chrom_i][chrom_j]
 
-        return fitness
+
+            # Just ckecking that the fitness is not greater than the possible maximum
+            if self.filename == 'tai256c.dat':
+                if new_fitness < 44095032:
+                    print(new_fitness)
+                    raise Exception("Fitness cannot be lesser than 44095032 on file tai256c")
+
+            individual.fitness = new_fitness

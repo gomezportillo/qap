@@ -38,7 +38,8 @@ class GeneticAlgorithm:
         self.flow_matrix = []
         self.distance_matrix = []
 
-        datafile = os.path.join('src', 'data', 'qap', filename)
+        self.filename = filename
+        datafile = os.path.join('src', 'data', 'qap', self.filename)
 
         if os.path.isfile( datafile ):
             with open( datafile ) as f:
@@ -49,18 +50,17 @@ class GeneticAlgorithm:
 
                 # Reading the flow matrix
                 for line in range(self.problem_size):
-                    list_str = f.readline().split()
-                    list_int = list(map(int, list_str))
-                    self.flow_matrix.append( list_int)
-
-                # Avoids an empty line on the middle of the file
-                f.readline()
+                    if line != '':
+                        list_str = f.readline().split()
+                        list_int = list(map(int, list_str))
+                        self.flow_matrix.append( list_int)
 
                 # Reading the distance matrix
                 for line in range(self.problem_size):
-                    list_str = f.readline().split()
-                    list_int = list(map(int, list_str))
-                    self.distance_matrix.append( list_int )
+                    if line != '':
+                        list_str = f.readline().split()
+                        list_int = list(map(int, list_str))
+                        self.distance_matrix.append( list_int )
 
         else:
             raise Exception("{} is not a file".format( datafile ))
@@ -79,12 +79,11 @@ class GeneticAlgorithm:
 
 
     def calculate_fitness(self, population):
-        for individual in population:
-            individual.calculate_fitness()
+        raise NotImplementedError
 
 
     def execute(self):
-        pass
+        raise NotImplementedError
 
 
     def select(self):
