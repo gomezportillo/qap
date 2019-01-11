@@ -9,4 +9,4 @@ class Lamarckian(GeneticAlgorithm):
 
 
     def execute(self, datafile):
-        print("Executing lamarckian...{}".format( self.SIZE ))
+        print("Executing lamarckian...")

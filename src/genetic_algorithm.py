@@ -13,33 +13,27 @@ class GeneticAlgorithm:
     """
 
     def __init__(self):
-        self.SIZE                   = 1
-        self.POPULATION_SIZE        = 0
+        """
+        Fixed variables
+        """
+        self.POPULATION_SIZE        = 50
         self.NUMBER_OF_GENERATIONS  = 200
-        self.TOURNAMENT_SIZE        = 4
+        self.TOURNAMENT_SIZE        = 2 # binary tournament
         self.INDIVIDUAL_MUTATION_PROBABILITY = 0.5
         self.GENE_MUTATION_PROBABILITY       = 0.5
 
+        """
+        Changing variables
+        """
+        self.problem_size    = -1
         self.flow_matrix     = []
         self.distance_matrix = []
 
 
-    def create_population(self):
-        population = []
-        for i in self.POPULATION_SIZE:
-            population.append( Individual() )
-
-        return population
-
-
-    def calculate_fitness(self, population):
-        for i in population:
-            i.calculate_fitness()
-
-
     def load(self, filename):
         """
-        Reads a file and returns it flow and distance matrices
+        Parses a file and stores its flow and distance matrices as class variables
+        that can be accessed by the class inheriting from it
         """
         self.flow_matrix = []
         self.distance_matrix = []
@@ -48,13 +42,13 @@ class GeneticAlgorithm:
 
         if os.path.isfile( datafile ):
             with open( datafile ) as f:
-                self.SIZE = int(f.readline())
+                self.problem_size = int(f.readline())
 
                 # Avoids an empty line before the size
                 f.readline()
 
                 # Reading the flow matrix
-                for line in range(self.SIZE):
+                for line in range(self.problem_size):
                     list_str = f.readline().split()
                     list_int = list(map(int, list_str))
                     self.flow_matrix.append( list_int)
@@ -63,14 +57,30 @@ class GeneticAlgorithm:
                 f.readline()
 
                 # Reading the distance matrix
-                for line in range(self.SIZE):
+                for line in range(self.problem_size):
                     list_str = f.readline().split()
                     list_int = list(map(int, list_str))
-                    self.distance_matrix.append( list_int)
-
+                    self.distance_matrix.append( list_int )
 
         else:
             raise Exception("{} is not a file".format( datafile ))
+
+
+    def create_population(self):
+        """
+        Generates a population with the size of the problem initialised
+        with random individuals
+        """
+        population = []
+        for i in range(self.POPULATION_SIZE):
+            population.append( Individual( self.problem_size ) )
+
+        return population
+
+
+    def calculate_fitness(self, population):
+        for individual in population:
+            individual.calculate_fitness()
 
 
     def execute(self):
@@ -78,7 +88,7 @@ class GeneticAlgorithm:
 
 
     def select(self):
-        tournamet = []
+        tournament = []
         pass
 
 
