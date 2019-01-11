@@ -2,8 +2,9 @@
 Parent class of the rest of the algorithms holding its variables
 """
 
-from individual import Individual
+import os
 
+from individual import Individual
 
 
 class GeneticAlgorithm:
@@ -33,24 +34,39 @@ class GeneticAlgorithm:
             i.calculate_fitness()
 
 
-    def load(datafile):
+    def load(self, filename):
+        """
+        Reads a file and returns it flow and distance matrices
+        """
+        flow_matrix = []
+        distance_matrix = []
+
+        datafile = os.path.join('src', 'data', 'qap', filename)
 
         if os.path.isfile( datafile ):
             with open( datafile ) as f:
-                SIZE  = f.readline()
+                self.SIZE = int(f.readline())
 
+                # Avoids an empty line before the size
                 f.readline()
 
-                print("Reading the flow matrix")
+                # Reading the flow matrix
                 for line in range(self.SIZE):
-                    print(f.readline())
+                    list_str = f.readline().split()
+                    list_int = list(map(int, list_str))
+                    flow_matrix.append( list_int)
 
+                # Avoids an empty line on the middle of the file
                 f.readline()
 
-                print("Reading the distance matrix")
+                # Reading the distance matrix
                 for line in range(self.SIZE):
-                    print(f.readline())
+                    list_str = f.readline().split()
+                    list_int = list(map(int, list_str))
+                    distance_matrix.append( list_int)
 
+
+                return flow_matrix, distance_matrix
         else:
             raise Exception("{} is not a file".format( datafile ))
 

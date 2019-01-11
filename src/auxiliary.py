@@ -31,4 +31,4 @@ def execute_algorithm( algorithm, datafile ):
         return time.time() - start_time
 
     else:
-        raise Exception('The variable is not a subclass of GeneticAlgorithm')
+        raise Exception('The algorithm is not a subclass of GeneticAlgorithm')
