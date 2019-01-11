@@ -20,3 +20,7 @@ class Individual:
         equal_chrom = set(self.chromosome) == set(other.chromosome)
 
         return equal_size and equal_chrom
+
+
+    def __lt__(self, other):
+        return self.fitness < other.fitness

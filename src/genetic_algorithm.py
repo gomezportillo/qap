@@ -83,7 +83,7 @@ class GeneticAlgorithm:
         tournament = []
         shuffle( self.current_generation )
 
-        for i in range( self.TOURNAMENT_SIZE )
+        for i in range( self.TOURNAMENT_SIZE ):
             tournament.append( self.current_generation[i] )
 
         return min(tournament)
