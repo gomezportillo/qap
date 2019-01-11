@@ -18,7 +18,7 @@ class Standard(GeneticAlgorithm):
         """
         Loads the data, creates the first generation and executes the genetic algorithm
         """
-        print("Executing standard with file {}".format(datafile))
+        print("Executing Standard algorithm with file {}".format(datafile))
 
         super().load( datafile )
 

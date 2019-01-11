@@ -6,7 +6,7 @@ import os
 import time
 
 from genetic_algorithm import GeneticAlgorithm
-
+from standard import Standard
 
 DATA_DIR = os.path.join('src', 'data', 'qap')
 
@@ -32,3 +32,14 @@ def execute_algorithm( algorithm, datafile ):
 
     else:
         raise Exception('The algorithm is not a subclass of GeneticAlgorithm')
+
+
+def check_files( files ):
+    n_assertion = 0
+    for file in files:
+        try:
+            execute_algorithm( Standard(), file )
+        except AssertionError:
+            print("=========== AssertionError exception on file", file)
+            n_assertion += 1
+    print(n_assertion)

@@ -43,37 +43,16 @@ class GeneticAlgorithm:
 
         if os.path.isfile( datafile ):
             with open( datafile, 'r' ) as f:
-                # Read the problem size
-                self.problem_size = int(f.readline())
+                lines = f.readlines()
+                lines = [line.split() for line in lines]
+                lines = [list(map(int, line)) for line in lines if line != []] # avoids empty lines
 
-                # Reading the flow matrix
-                line_str = f.readline().split()
-                while line_str == []:
-                    line_str = f.readline().split()
+                self.problem_size = int(lines[0][0])
 
-                line = 0
-                while line < self.problem_size and line_str != []:
-                    list_int = list(map(int, line_str))
-                    self.flow_matrix.append(list_int)
+                assert(len(lines) == self.problem_size*2+1) # checks the file has a correct structure
 
-                    line_str = f.readline().split()
-                    line += 1
-
-                assert( len(self.flow_matrix) == self.problem_size)
-
-                # Reading the distance matrix
-                while line_str == []:
-                    line_str = f.readline().split()
-
-                line = 0
-                while line < self.problem_size and line_str != []:
-                    list_int = list(map(int, line_str))
-                    self.distance_matrix.append(list_int)
-
-                    line_str = f.readline().split()
-                    line += 1
-
-                assert( len(self.distance_matrix) == self.problem_size)
+                self.flow_matrix = lines[1:self.problem_size+1]
+                self.distance_matrix = lines[self.problem_size+1:]
 
         else:
             raise Exception("{} is not a file".format( datafile ))
