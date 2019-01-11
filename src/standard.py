@@ -10,13 +10,16 @@ class Standard(GeneticAlgorithm):
 
     def execute(self, datafile):
         print("Executing standard...")
-        flow_matrix, distance_matrix = super().load( datafile )
+        super().load( datafile )
 
-        for line in flow_matrix:
+        print(self.SIZE)
+
+        for line in self.flow_matrix:
             print(line)
 
-        for line in distance_matrix:
+        for line in self.distance_matrix:
             print(line)
+
 
     def calculate_fitness(self):
         fitness = 0

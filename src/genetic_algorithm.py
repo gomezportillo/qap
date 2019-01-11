@@ -8,6 +8,9 @@ from individual import Individual
 
 
 class GeneticAlgorithm:
+    """
+    Parent class of the rest of algorithms, holding their common functions and variables
+    """
 
     def __init__(self):
         self.SIZE                   = 1
@@ -38,8 +41,8 @@ class GeneticAlgorithm:
         """
         Reads a file and returns it flow and distance matrices
         """
-        flow_matrix = []
-        distance_matrix = []
+        self.flow_matrix = []
+        self.distance_matrix = []
 
         datafile = os.path.join('src', 'data', 'qap', filename)
 
@@ -54,7 +57,7 @@ class GeneticAlgorithm:
                 for line in range(self.SIZE):
                     list_str = f.readline().split()
                     list_int = list(map(int, list_str))
-                    flow_matrix.append( list_int)
+                    self.flow_matrix.append( list_int)
 
                 # Avoids an empty line on the middle of the file
                 f.readline()
@@ -63,10 +66,9 @@ class GeneticAlgorithm:
                 for line in range(self.SIZE):
                     list_str = f.readline().split()
                     list_int = list(map(int, list_str))
-                    distance_matrix.append( list_int)
+                    self.distance_matrix.append( list_int)
 
 
-                return flow_matrix, distance_matrix
         else:
             raise Exception("{} is not a file".format( datafile ))
 
