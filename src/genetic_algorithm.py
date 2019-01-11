@@ -5,6 +5,7 @@ Parent class of the rest of the algorithms holding its variables
 import os
 
 from individual import Individual
+from random import shuffle
 
 
 class GeneticAlgorithm:
@@ -16,7 +17,7 @@ class GeneticAlgorithm:
         """
         Fixed variables
         """
-        self.POPULATION_SIZE        = 50
+        self.GENERATION_SIZE        = 50
         self.NUMBER_OF_GENERATIONS  = 200
         self.TOURNAMENT_SIZE        = 2 # binary tournament
         self.INDIVIDUAL_MUTATION_PROBABILITY = 0.5
@@ -66,24 +67,26 @@ class GeneticAlgorithm:
             raise Exception("{} is not a file".format( datafile ))
 
 
-    def create_population(self):
+    def create_generation(self):
         """
-        Generates a population with the size of the problem initialised
+        Creates a generation with the size of the problem initialised
         with random individuals
         """
-        population = []
-        for i in range(self.POPULATION_SIZE):
-            population.append( Individual( self.problem_size ) )
+        generation = []
+        for i in range(self.GENERATION_SIZE):
+            generation.append( Individual( self.problem_size ) )
 
-        return population
-
-
-    def calculate_fitness(self, population):
-        raise NotImplementedError
+        return generation
 
 
-    def execute(self):
-        raise NotImplementedError
+    def tournament(self):
+        tournament = []
+        shuffle( self.current_generation )
+
+        for i in range( self.TOURNAMENT_SIZE )
+            tournament.append( self.current_generation[i] )
+
+        return min(tournament)
 
 
     def select(self):
