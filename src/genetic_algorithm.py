@@ -19,7 +19,6 @@ class GeneticAlgorithm:
         """
         self.GENERATION_SIZE        = 50
         self.NUMBER_OF_GENERATIONS  = 200
-        self.TOURNAMENT_SIZE        = 2 # binary tournament
         self.INDIVIDUAL_MUTATION_PROBABILITY = 0.5
         self.GENE_MUTATION_PROBABILITY       = 0.5
 
@@ -43,25 +42,38 @@ class GeneticAlgorithm:
         datafile = os.path.join('src', 'data', 'qap', self.filename)
 
         if os.path.isfile( datafile ):
-            with open( datafile ) as f:
+            with open( datafile, 'r' ) as f:
+                # Read the problem size
                 self.problem_size = int(f.readline())
 
-                # Avoids an empty line before the size
-                f.readline()
-
                 # Reading the flow matrix
-                for line in range(self.problem_size):
-                    if line != '':
-                        list_str = f.readline().split()
-                        list_int = list(map(int, list_str))
-                        self.flow_matrix.append( list_int)
+                line_str = f.readline().split()
+                while line_str == []:
+                    line_str = f.readline().split()
+
+                line = 0
+                while line < self.problem_size and line_str != []:
+                    list_int = list(map(int, line_str))
+                    self.flow_matrix.append(list_int)
+
+                    line_str = f.readline().split()
+                    line += 1
+
+                assert( len(self.flow_matrix) == self.problem_size)
 
                 # Reading the distance matrix
-                for line in range(self.problem_size):
-                    if line != '':
-                        list_str = f.readline().split()
-                        list_int = list(map(int, list_str))
-                        self.distance_matrix.append( list_int )
+                while line_str == []:
+                    line_str = f.readline().split()
+
+                line = 0
+                while line < self.problem_size and line_str != []:
+                    list_int = list(map(int, line_str))
+                    self.distance_matrix.append(list_int)
+
+                    line_str = f.readline().split()
+                    line += 1
+
+                assert( len(self.distance_matrix) == self.problem_size)
 
         else:
             raise Exception("{} is not a file".format( datafile ))
@@ -79,14 +91,12 @@ class GeneticAlgorithm:
         return generation
 
 
-    def tournament(self):
-        tournament = []
-        shuffle( self.current_generation )
+    def binary_tournament(self):
+        # tournament = []
+        # shuffle( self.current_generation )
+        # return min(tournament)
+        pass
 
-        for i in range( self.TOURNAMENT_SIZE ):
-            tournament.append( self.current_generation[i] )
-
-        return min(tournament)
 
 
     def select(self):

@@ -21,9 +21,9 @@ class Standard(GeneticAlgorithm):
         print("Executing standard with file {}".format(datafile))
 
         super().load( datafile )
+
         self.current_generation = super().create_generation()
         self.calculate_fitness( self.current_generation )
-
         self.execute_algorithm()
 
 
@@ -32,8 +32,8 @@ class Standard(GeneticAlgorithm):
             generation = super().create_generation()
 
             for j in range( int(self.GENERATION_SIZE/2) ):
-                parent1 = super().tournament()
-                parent2 = super().tournament()
+                # parent1, parent2 = super().binary_tournament()
+                pass
 
 
     def calculate_fitness(self, generation):
@@ -54,5 +54,5 @@ class Standard(GeneticAlgorithm):
 
             # Just ckecking that the fitness is not greater than the possible maximum
             if self.filename == 'tai256c.dat' and new_fitness < 44095032:
-                print(new_fitness)
+                print("Current fitness", new_fitness)
                 raise Exception("Fitness cannot be lesser than 44095032 on file tai256c")
