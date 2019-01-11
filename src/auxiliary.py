@@ -23,7 +23,7 @@ def get_data_files( dir ):
 
 def execute_algorithm( algorithm, datafile ):
     """
-    Executes an algorithm and returns its computing time
+    Executes a genetic algorithm and returns its computing time
     """
     if issubclass(type(algorithm), GeneticAlgorithm):
         start_time = time.time()
@@ -34,12 +34,19 @@ def execute_algorithm( algorithm, datafile ):
         raise Exception('The algorithm is not a subclass of GeneticAlgorithm')
 
 
-def check_files( files ):
-    n_assertion = 0
-    for file in files:
+def check_files( ):
+    """
+    Runs the Standar genetic algorithm with all the files and checks for
+    AssertionErrors, that happens when the files are not well-structured
+    Corret structure: Problem size, flow matrix and distance matrix with
+    size equal to the problem size
+    Current erros: 19
+    """
+    n_assertion_err = 0
+    for file in get_data_files( DATA_DIR ):
         try:
             execute_algorithm( Standard(), file )
         except AssertionError:
             print("=========== AssertionError exception on file", file)
-            n_assertion += 1
-    print(n_assertion)
+            n_assertion_err += 1
+    print(n_assertion_err)

@@ -3,9 +3,9 @@ Parent class of the rest of the algorithms holding its variables
 """
 
 import os
+import random
 
 from individual import Individual
-from random import shuffle
 
 
 class GeneticAlgorithm:
@@ -71,21 +71,17 @@ class GeneticAlgorithm:
 
 
     def binary_tournament(self):
-        # tournament = []
-        # shuffle( self.current_generation )
-        # return min(tournament)
-        pass
+        """
+        Randomly selects two different individuals from the current generation
+        and returns the optimal one
+        """
+        random_num = random.sample(range(0, self.GENERATION_SIZE), 2)
+
+        individ1 = self.current_generation[random_num[0]]
+        individ2 = self.current_generation[random_num[1]]
+
+        return min([individ1, individ2])
 
 
-
-    def select(self):
-        tournament = []
-        pass
-
-
-    def crossover(self, indiv1, indiv2):
-        pass
-
-
-    def mutate(self, indiv):
-        pass
+    def genetic_crossover(self, parent1, parent2):
+        return 'foo', 'bar'

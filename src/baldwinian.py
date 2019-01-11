@@ -9,4 +9,4 @@ class Baldwinian(GeneticAlgorithm):
 
 
     def execute(self, datafile):
-        print("Executing baldwinian...")
+        print("Executing Baldwinian...")

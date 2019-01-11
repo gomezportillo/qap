@@ -8,9 +8,6 @@ class Standard(GeneticAlgorithm):
     """
 
     def __init__(self):
-        """
-        Construct from parent class
-        """
         super(Standard, self).__init__()
 
 
@@ -32,8 +29,18 @@ class Standard(GeneticAlgorithm):
             generation = super().create_generation()
 
             for j in range( int(self.GENERATION_SIZE/2) ):
-                # parent1, parent2 = super().binary_tournament()
-                pass
+                parent1 = super().binary_tournament()
+
+                parent2 = None
+                while parent1 != parent2:
+                    parent2 = super().binary_tournament()
+
+                child1, child2 = super().genetic_crossover(parent1, parent2)
+
+                child1.mutate()
+                child2.mutate()
+
+                # add mutated childs to new population
 
 
     def calculate_fitness(self, generation):

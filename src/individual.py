@@ -15,7 +15,14 @@ class Individual:
         shuffle(self.chromosome)
 
 
+    def mutate(self):
+        pass
+
+
     def __eq__(self, other):
+        if not isinstance(other, Individual):
+            return False
+
         equal_size = self.size == other.size
         equal_chrom = set(self.chromosome) == set(other.chromosome)
 
@@ -23,4 +30,7 @@ class Individual:
 
 
     def __lt__(self, other):
+        if not isinstance(other, Individual):
+            return False
+
         return self.fitness < other.fitness
