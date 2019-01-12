@@ -84,4 +84,10 @@ class GeneticAlgorithm:
 
 
     def genetic_crossover(self, parent1, parent2):
-        return 'foo', 'bar'
+        slice_index = random.randint(1, self.problem_size-1)
+        print(slice_index)
+        child1 = parent1.chromosome[:slice_index] + parent2.chromosome[slice_index:]
+        child2 = parent2.chromosome[:slice_index] + parent1.chromosome[slice_index:]
+
+
+        return child1, child2

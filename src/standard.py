@@ -1,6 +1,6 @@
 
 from genetic_algorithm import GeneticAlgorithm
-
+from individual import Individual
 
 class Standard(GeneticAlgorithm):
     """
@@ -21,7 +21,22 @@ class Standard(GeneticAlgorithm):
 
         self.current_generation = super().create_generation()
         self.calculate_fitness( self.current_generation )
-        self.execute_algorithm()
+        # self.execute_algorithm()
+        self.test_crossover()
+
+
+    def test_crossover(self):
+        self.problem_size = 6
+        parent1 = Individual(6)
+        parent2 = Individual(6)
+        # parent1.chromosome = [0, 1, 2, 3, 4, 5]
+        # parent1.chromosome = [3, 4, 5, 0, 1, 2]
+        child1, child2 = super().genetic_crossover(parent1, parent2)
+        print("parent1", parent1)
+        print("parent2", parent2)
+        print("--------------------")
+        print("child1", child1)
+        print("child2", child2)
 
 
     def execute_algorithm(self):

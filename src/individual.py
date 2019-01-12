@@ -19,6 +19,10 @@ class Individual:
         pass
 
 
+    def __str__(self):
+        return str(self.chromosome)
+
+
     def __eq__(self, other):
         if not isinstance(other, Individual):
             return False
