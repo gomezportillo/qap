@@ -83,15 +83,21 @@ class GeneticAlgorithm:
         return min([individ1, individ2])
 
 
-    def genetic_crossover(self, parent1, parent2):
+    def genetic_crossover(self, parent1_chrom, parent2_chrom):
+        """
+        Mixes the two parent individuals into two children slicing them by a
+        random index and avoiding repeating chromosomes in eahc child
+        """
         slice_index = random.randint(1, self.problem_size-1)
 
         child1_chrom = self.croosover_chromosomes(slice_index,
-                                                  parent1.chromosome,
-                                                  parent2.chromosome)
+                                                  parent1_chrom.chromosome,
+                                                  parent2_chrom.chromosome)
         child2_chrom = self.croosover_chromosomes(slice_index,
-                                                  parent2.chromosome,
-                                                  parent1.chromosome)
+                                                  parent2_chrom.chromosome,
+                                                  parent1_chrom.chromosome)
+
+        assert(len(child1_chrom) == len(child2_chrom) == self.problem_size)
 
         child1 = Individual( self.problem_size )
         child1.chromosome = child1_chrom

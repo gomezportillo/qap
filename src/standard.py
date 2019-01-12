@@ -21,14 +21,11 @@ class Standard(GeneticAlgorithm):
 
         self.current_generation = super().create_generation()
         self.calculate_fitness( self.current_generation )
-        self.execute_algorithm()
 
-
-    def execute_algorithm(self):
         for i in range( self.NUMBER_OF_GENERATIONS ):
-            generation = super().create_generation()
 
-            for j in range( int(self.GENERATION_SIZE/2) ):
+            new_generation = []
+            for j in range( int(self.GENERATION_SIZE), 2 ): # step = 2
                 parent1 = super().binary_tournament()
 
                 parent2 = None
@@ -40,7 +37,11 @@ class Standard(GeneticAlgorithm):
                 child1.mutate()
                 child2.mutate()
 
-                # add mutated childs to new population
+                new_generation.append( child1 )
+                new_generation.append( child2 )
+
+            # save the best one of the generation?
+        # return the best one among all generatoins?
 
 
     def calculate_fitness(self, generation):

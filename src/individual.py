@@ -16,6 +16,10 @@ class Individual:
 
 
     def mutate(self):
+        # if random > mutation_prob
+            # random > gen_mutation_prob
+                # index = random x2
+                # swap indexes
         pass
 
 
