@@ -18,7 +18,7 @@ class GeneticAlgorithm:
         Fixed variables
         """
         self.GENERATION_SIZE       = 50
-        self.NUMBER_OF_GENERATIONS = 10
+        self.NUMBER_OF_GENERATIONS = 1000
 
         """
         Changing variables
@@ -53,7 +53,7 @@ class GeneticAlgorithm:
                 self.distance_matrix = lines[self.problem_size+1:]
 
         else:
-            raise Exception("{} is not a file".format( datafile ))
+            raise FileNotFoundError("Cannot find file {}".format( datafile ))
 
 
     def create_generation(self):
@@ -127,7 +127,7 @@ class GeneticAlgorithm:
         Genetic algorithm's execution function. It is inherited by all its
         children, which will overload the default 'calculate_fitness' function.
         """
-        print("Executing Standard algorithm with file {}".format(datafile))
+        print("Executing algorithm with file {}".format(datafile))
 
         self.load( datafile )
 
@@ -135,7 +135,7 @@ class GeneticAlgorithm:
         self.calculate_fitness( self.current_generation )
 
         for i in range( self.NUMBER_OF_GENERATIONS ):
-            print("Executing generation {}/{}...".format(i, self.NUMBER_OF_GENERATIONS), end="\r")
+            print("Executing generation {}/{}...".format(i+1, self.NUMBER_OF_GENERATIONS), end="\r")
 
             new_generation = []
             for j in range( 0, int(self.GENERATION_SIZE), 2 ): # step = 2
