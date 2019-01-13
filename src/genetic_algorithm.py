@@ -18,7 +18,7 @@ class GeneticAlgorithm:
         Fixed variables
         """
         self.GENERATION_SIZE       = 50
-        self.NUMBER_OF_GENERATIONS = 100
+        self.NUMBER_OF_GENERATIONS = 1000
 
         """
         Changing variables
@@ -89,19 +89,19 @@ class GeneticAlgorithm:
         slice_index = random.randint(1, self.problem_size-1)
 
         child1_chrom = self.croosover_chromosomes(slice_index,
-                                                  parent1_chrom.chromosome,
-                                                  parent2_chrom.chromosome)
+                                                  parent1_chrom.chromosomes,
+                                                  parent2_chrom.chromosomes)
         child2_chrom = self.croosover_chromosomes(slice_index,
-                                                  parent2_chrom.chromosome,
-                                                  parent1_chrom.chromosome)
+                                                  parent2_chrom.chromosomes,
+                                                  parent1_chrom.chromosomes)
 
         assert(len(child1_chrom) == len(child2_chrom) == self.problem_size)
 
         child1 = Individual( self.problem_size )
-        child1.chromosome = child1_chrom
+        child1.chromosomes = child1_chrom
 
         child2 = Individual( self.problem_size )
-        child2.chromosome = child2_chrom
+        child2.chromosomes = child2_chrom
 
         return child1, child2
 
@@ -120,3 +120,14 @@ class GeneticAlgorithm:
                 index = 0
 
         return child
+
+
+    def print_result(self, best_one):
+        print("________________________________________________")
+        print("Recombination operator: Crossover")
+        print("Mutation operator: Index swap")
+        print("Problem size: ", self.problem_size)
+        print("Number of generations: ", self.NUMBER_OF_GENERATIONS)
+        print("Generation size: ", self.GENERATION_SIZE)
+        print("Fitness of the final best individual: ", best_one.fitness)
+        print("Chromosomes:\n", best_one.chromosomes )

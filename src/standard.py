@@ -57,7 +57,7 @@ class Standard(GeneticAlgorithm):
             self.calculate_fitness( self.current_generation )
 
         best_one = min( self.current_generation )
-        self.print_result( best_one )
+        super().print_result( best_one )
         return best_one
 
 
@@ -69,8 +69,8 @@ class Standard(GeneticAlgorithm):
             new_fitness = 0
             for i in range(self.problem_size):
                 for j in range(self.problem_size):
-                    chrom_i = individual.chromosome[i]
-                    chrom_j = individual.chromosome[j]
+                    chrom_i = individual.chromosomes[i]
+                    chrom_j = individual.chromosomes[j]
 
                     new_fitness += self.flow_matrix[i][j] * \
                                    self.distance_matrix[chrom_i][chrom_j]
@@ -81,11 +81,3 @@ class Standard(GeneticAlgorithm):
             if self.filename == 'tai256c.dat' and new_fitness < 44095032:
                 print("Current fitness", new_fitness)
                 raise Exception("Fitness cannot be lesser than 44095032 on file tai256c")
-
-
-    def print_result(self, best_one):
-        print("________________________________________________")
-        print("Problem size: ", self.problem_size)
-        print("Number of generations: ", self.NUMBER_OF_GENERATIONS)
-        print("Generation size: ", self.GENERATION_SIZE)
-        print("Fitness of the final best individual: ", best_one.fitness)
