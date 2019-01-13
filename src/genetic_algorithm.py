@@ -18,7 +18,7 @@ class GeneticAlgorithm:
         Fixed variables
         """
         self.GENERATION_SIZE       = 50
-        self.NUMBER_OF_GENERATIONS = 1000
+        self.NUMBER_OF_GENERATIONS = 10
 
         """
         Changing variables
@@ -125,7 +125,7 @@ class GeneticAlgorithm:
     def execute(self, datafile):
         """
         Genetic algorithm's execution function. It is inherited by all its
-        children, which overload the default 'calculate_fitness' function.
+        children, which will overload the default 'calculate_fitness' function.
         """
         print("Executing Standard algorithm with file {}".format(datafile))
 
@@ -168,13 +168,41 @@ class GeneticAlgorithm:
             self.calculate_fitness( self.current_generation )
 
         best_one = min( self.current_generation )
-        self.print_result( best_one )
         return best_one
+
+
+    def calculate_fitness(self, generation):
+        """
+        All the child classes inheriting from this one shall override this
+        function.
+        """
+        raise NotImplementedError
+
+
+    def calculate_individual_fitness(self, individual):
+        """
+        Calculates the fitness of a single individual and checks that it is not
+        greater than the possible maximum.
+        """
+        new_fitness = 0
+        for i in range(self.problem_size):
+            for j in range(self.problem_size):
+                chrom_i = individual.chromosomes[i]
+                chrom_j = individual.chromosomes[j]
+
+                new_fitness += self.flow_matrix[i][j] * \
+                               self.distance_matrix[chrom_i][chrom_j]
+        individual.fitness = new_fitness
+
+        # Just ckecking that the fitness is not greater than the possible maximum
+        if self.filename == 'tai256c.dat' and new_fitness < 44095032:
+            raise Exception("Fitness cannot be lesser than 44095032 on file \
+                             tai256c, current ", new_fitness)
 
 
     def print_result(self, best_one):
         """
-        Prints the final result
+        Prints the final result.
         """
         print("________________________________________________")
         print("Recombination operator: Crossover")
@@ -184,7 +212,3 @@ class GeneticAlgorithm:
         print("Generation size: ", self.GENERATION_SIZE)
         print("Fitness of the final best individual: ", best_one.fitness)
         print("Chromosomes:\n", best_one.chromosomes )
-
-
-    def calculate_fitness(self, generation):
-        raise NotImplementedError
