@@ -61,14 +61,36 @@ class Baldwinian(GeneticAlgorithm):
         return S
 
 
-    def calculate_fitness_after_swap(self, T, val1, val2):
+    def calculate_fitness_after_swap(self, T, i, j):
         """
         Instead of calculating again the whole fitness, it is only a matter of
         calculing the chromosomes that have been changed.
-        Complexity reduced from n^2 to 2n, being n the problem_size
+        Complexity reduced from n^2 to 2n
         """
-        counter = 0
-        for i in range(self.problem_size):
-            counter += 1
+        new_fitness = T.fitness
 
-        # T.fitness = new_fitness
+        # recalculate i
+        chrom_new_i = T.chromosomes[i]
+        chrom_old_i = T.chromosomes[j]
+        for aux_j in range(self.problem_size):
+            chrom_j = T.chromosomes[aux_j]
+
+            new_fitness -= self.flow_matrix[j][i] * \
+                           self.distance_matrix[chrom_old_i][chrom_j]
+
+            new_fitness += self.flow_matrix[i][j] * \
+                           self.distance_matrix[chrom_new_i][chrom_j]
+
+        # recalculate j
+        chrom_new_j = T.chromosomes[j]
+        chrom_old_j = T.chromosomes[i]
+        for aux_i in range(self.problem_size):
+            chrom_i = T.chromosomes[aux_i]
+
+            new_fitness -= self.flow_matrix[j][i] * \
+                           self.distance_matrix[chrom_i][chrom_old_j]
+
+            new_fitness += self.flow_matrix[i][j] * \
+                           self.distance_matrix[chrom_i][chrom_new_j]
+
+        T.fitness = new_fitness
