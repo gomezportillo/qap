@@ -122,7 +122,60 @@ class GeneticAlgorithm:
         return child
 
 
+    def execute(self, datafile):
+        """
+        Genetic algorithm's execution function. It is inherited by all its
+        children, which overload the default 'calculate_fitness' function.
+        """
+        print("Executing Standard algorithm with file {}".format(datafile))
+
+        self.load( datafile )
+
+        self.current_generation = self.create_generation()
+        self.calculate_fitness( self.current_generation )
+
+        for i in range( self.NUMBER_OF_GENERATIONS ):
+            print("Executing generation {}/{}...".format(i, self.NUMBER_OF_GENERATIONS), end="\r")
+
+            new_generation = []
+            for j in range( 0, int(self.GENERATION_SIZE), 2 ): # step = 2
+                parent1 = self.binary_tournament()
+
+                parent2 = None
+                while parent1 != parent2:
+                    parent2 = self.binary_tournament()
+
+                child1, child2 = self.genetic_crossover(parent1, parent2)
+
+                child1.mutate()
+                child2.mutate()
+
+                new_generation.append( child1 )
+                new_generation.append( child2 )
+
+
+            """
+            Pops out the worst one of the current generation and inserts in
+            its place the best one of the previous generation
+            """
+            old_best = min( self.current_generation )
+            new_worst = max( new_generation )
+            new_worst_index = new_generation.index( new_worst )
+            new_generation.pop( new_worst_index )
+            new_generation.append( old_best )
+            self.current_generation = new_generation
+
+            self.calculate_fitness( self.current_generation )
+
+        best_one = min( self.current_generation )
+        self.print_result( best_one )
+        return best_one
+
+
     def print_result(self, best_one):
+        """
+        Prints the final result
+        """
         print("________________________________________________")
         print("Recombination operator: Crossover")
         print("Mutation operator: Index swap")
@@ -131,3 +184,7 @@ class GeneticAlgorithm:
         print("Generation size: ", self.GENERATION_SIZE)
         print("Fitness of the final best individual: ", best_one.fitness)
         print("Chromosomes:\n", best_one.chromosomes )
+
+
+    def calculate_fitness(self, generation):
+        raise NotImplementedError

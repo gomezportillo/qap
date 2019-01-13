@@ -14,51 +14,10 @@ class Standard(GeneticAlgorithm):
     def execute(self, datafile):
         """
         Loads the data, creates the first generation and executes the genetic
-        algorithm on each generation. Finally returns the best of 'em all.
+        algorithm on each generation executing the child 'calculate_fitness' 
+        function. Finally returns the best of 'em all.
         """
-        print("Executing Standard algorithm with file {}".format(datafile))
-
-        super().load( datafile )
-
-        self.current_generation = super().create_generation()
-        self.calculate_fitness( self.current_generation )
-
-        for i in range( self.NUMBER_OF_GENERATIONS ):
-            print("Executing generation {}/{}...".format(i, self.NUMBER_OF_GENERATIONS), end="\r")
-
-            new_generation = []
-            for j in range( 0, int(self.GENERATION_SIZE), 2 ): # step = 2
-                parent1 = super().binary_tournament()
-
-                parent2 = None
-                while parent1 != parent2:
-                    parent2 = super().binary_tournament()
-
-                child1, child2 = super().genetic_crossover(parent1, parent2)
-
-                child1.mutate()
-                child2.mutate()
-
-                new_generation.append( child1 )
-                new_generation.append( child2 )
-
-
-            """
-            Pops out the worst one of the current generation and inserts in
-            its place the best one of the previous generation
-            """
-            old_best = min( self.current_generation )
-            new_worst = max( new_generation )
-            new_worst_index = new_generation.index( new_worst )
-            new_generation.pop( new_worst_index )
-            new_generation.append( old_best )
-            self.current_generation = new_generation
-
-            self.calculate_fitness( self.current_generation )
-
-        best_one = min( self.current_generation )
-        super().print_result( best_one )
-        return best_one
+        return super().execute( datafile )
 
 
     def calculate_fitness(self, generation):
