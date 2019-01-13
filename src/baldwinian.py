@@ -38,21 +38,42 @@ class Baldwinian(GeneticAlgorithm):
         size = individual.size
         S = deepcopy( individual )
         super().calculate_individual_fitness( S )
+        # print("greedy")
 
-        while True:
+        result_fount = False
+        # counter = 1
+        while not result_fount:
             best = deepcopy( S )
+            # print("pre-for ", counter)
+
             for i in range(size):
+                # print("post-for {}/{}".format(i+1, size))
+
                 for j in range(i + 1, size):
                     T = deepcopy( S )
                     T.chromosomes[i] = S.chromosomes[j]
                     T.chromosomes[j] = S.chromosomes[i]
 
-                    super().calculate_individual_fitness( T )
+                    self.calculate_fitness_after_swap( S, T, i, j )
 
                     if T < S:
                         S = deepcopy( T )
 
             if S < best:
-                break
-
+                result_fount = True
+            # counter+= 1
         return S
+
+
+    def calculate_fitness_after_swap(self, S, T, i, j):
+        """
+        Instead of calculating again the whole fitness, it is only a matter of
+        calculing the chromosomes that have been changed, decreasing the
+        complexity of the function from quadratic to lineal
+        Fitness(T) = Fitness(S) - Fitness(S)(ij) + Fitness(F)(ij)
+        """
+        fitnessSij = self.flow_matrix[i][j] * self.distance_matrix[S.chromosomes[i]][S.chromosomes[j]]
+        fitnessTij = self.flow_matrix[i][j] * self.distance_matrix[T.chromosomes[i]][T.chromosomes[j]]
+
+        new_fitness = S.fitness - fitnessSij + fitnessTij
+        T.fitness = new_fitness

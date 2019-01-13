@@ -17,8 +17,8 @@ class GeneticAlgorithm:
         """
         Fixed variables
         """
-        self.GENERATION_SIZE       = 50
-        self.NUMBER_OF_GENERATIONS = 1000
+        self.GENERATION_SIZE       = 25
+        self.NUMBER_OF_GENERATIONS = 500
 
         """
         Changing variables
