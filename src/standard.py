@@ -13,7 +13,8 @@ class Standard(GeneticAlgorithm):
 
     def execute(self, datafile):
         """
-        Loads the data, creates the first generation and executes the genetic algorithm
+        Loads the data, creates the first generation and executes the genetic
+        algorithm on each generation. Finally returns the best of 'em all.
         """
         print("Executing Standard algorithm with file {}".format(datafile))
 
@@ -23,9 +24,10 @@ class Standard(GeneticAlgorithm):
         self.calculate_fitness( self.current_generation )
 
         for i in range( self.NUMBER_OF_GENERATIONS ):
+            print("Executing generation {}/{}...".format(i, self.NUMBER_OF_GENERATIONS), end="\r")
 
             new_generation = []
-            for j in range( int(self.GENERATION_SIZE), 2 ): # step = 2
+            for j in range( 0, int(self.GENERATION_SIZE), 2 ): # step = 2
                 parent1 = super().binary_tournament()
 
                 parent2 = None
@@ -40,8 +42,23 @@ class Standard(GeneticAlgorithm):
                 new_generation.append( child1 )
                 new_generation.append( child2 )
 
-            # save the best one of the generation?
-        # return the best one among all generatoins?
+
+            """
+            Pops out the worst one of the current generation and inserts in
+            its place the best one of the previous generation
+            """
+            old_best = min( self.current_generation )
+            new_worst = max( new_generation )
+            new_worst_index = new_generation.index( new_worst )
+            new_generation.pop( new_worst_index )
+            new_generation.append( old_best )
+            self.current_generation = new_generation
+
+            self.calculate_fitness( self.current_generation )
+
+        best_one = min( self.current_generation )
+        self.print_result( best_one )
+        return best_one
 
 
     def calculate_fitness(self, generation):
@@ -64,3 +81,11 @@ class Standard(GeneticAlgorithm):
             if self.filename == 'tai256c.dat' and new_fitness < 44095032:
                 print("Current fitness", new_fitness)
                 raise Exception("Fitness cannot be lesser than 44095032 on file tai256c")
+
+
+    def print_result(self, best_one):
+        print("________________________________________________")
+        print("Problem size: ", self.problem_size)
+        print("Number of generations: ", self.NUMBER_OF_GENERATIONS)
+        print("Generation size: ", self.GENERATION_SIZE)
+        print("Fitness of the final best individual: ", best_one.fitness)

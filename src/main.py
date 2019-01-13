@@ -12,8 +12,8 @@ lamarckian = Lamarckian()
 
 if __name__ == '__main__':
 
-    # elapsed_time = execute_algorithm( standard, 'tai256c.dat' )
-    elapsed_time = execute_algorithm( standard, 'bur26a.dat' )
+    # elapsed_time = execute_algorithm( standard, 'bur26a.dat' )
+    elapsed_time = execute_algorithm( standard, 'tai256c.dat' )
     print("Standard executing time: {:.3f}s\n".format(elapsed_time))
 
     # elapsed_time = execute_algorithm( baldwinian )

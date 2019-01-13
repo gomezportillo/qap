@@ -17,10 +17,8 @@ class GeneticAlgorithm:
         """
         Fixed variables
         """
-        self.GENERATION_SIZE        = 50
-        self.NUMBER_OF_GENERATIONS  = 200
-        self.INDIVIDUAL_MUTATION_PROBABILITY = 0.5
-        self.GENE_MUTATION_PROBABILITY       = 0.5
+        self.GENERATION_SIZE       = 50
+        self.NUMBER_OF_GENERATIONS = 100
 
         """
         Changing variables
@@ -75,10 +73,10 @@ class GeneticAlgorithm:
         Randomly selects two different individuals from the current generation
         and returns the optimal one
         """
-        random_num = random.sample(range(0, self.GENERATION_SIZE), 2)
+        rand_numb1, rand_numb2 = random.sample(range(0, self.GENERATION_SIZE), 2)
 
-        individ1 = self.current_generation[random_num[0]]
-        individ2 = self.current_generation[random_num[1]]
+        individ1 = self.current_generation[rand_numb1]
+        individ2 = self.current_generation[rand_numb2]
 
         return min([individ1, individ2])
 
