@@ -33,9 +33,6 @@ class GeneticAlgorithm:
         Parses a file and stores its flow and distance matrices as class variables
         that can be accessed by the class inheriting from it
         """
-        self.flow_matrix = []
-        self.distance_matrix = []
-
         self.filename = filename
         datafile = os.path.join('src', 'data', 'qap', self.filename)
 

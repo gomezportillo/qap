@@ -18,5 +18,5 @@ if __name__ == '__main__':
     elapsed_time = execute_algorithm( baldwinian, 'tai256c.dat' )
     print("Baldwinian executing time: {:.3f}s\n".format(elapsed_time))
 
-    # elapsed_time = execute_algorithm( lamarckian )
+    # elapsed_time = execute_algorithm( lamarckian, 'bur26a.dat' )
     # print("Lamarckian executing time: {:.3f}s\n".format(elapsed_time))

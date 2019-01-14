@@ -25,10 +25,15 @@ class Baldwinian(GeneticAlgorithm):
 
 
     def calculate_fitness(self, generation):
+        """
+        Optimizes the individual but only changes its fitness without letting
+        the optimisation, thus not allowing the optimization to be in it
+        offspring. Works in the way propposed by the psicologist J. M. Baldwin.
+        """
         counter=0
         for individual in generation:
             counter += 1
-            print("individual ", counter)
+            print("individual {}/{}".format(counter, len(generation)))
             optimized_individual = self.greedy_optimization( individual )
             individual.fitness = optimized_individual.fitness
 
