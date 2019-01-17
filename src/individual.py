@@ -20,7 +20,7 @@ class Individual:
 
     def mutate(self):
         if self.INDIVIDUAL_MUTATION_PROBABILITY > random.random():
-            for c in self.chromosomes:
+            for chromosome in self.chromosomes:
                 if self.GENE_MUTATION_PROBABILITY > random.random():
                     index1, index2 = random.sample(range(0, self.size), 2)
                     self.swap( index1, index2 )

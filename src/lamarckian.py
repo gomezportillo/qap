@@ -1,10 +1,11 @@
-from copy import deepcopy
-
 from genetic_algorithm import GeneticAlgorithm
 from individual import Individual
 
 
 class Lamarckian(GeneticAlgorithm):
+    """
+    Lamarckian implementation of the genetic algorithm
+    """
 
     def __init__(self):
         super(Lamarckian, self).__init__()
@@ -24,14 +25,11 @@ class Lamarckian(GeneticAlgorithm):
     def calculate_fitness(self, generation):
         """
         Optimizes the individual and saves the changes for them to be inherited
-        by its offspring. Works in the say proposed by the biologist J. B. Lamark.
+        by its offspring so next generation have it. Works in the say proposed
+        by the biologist J. B. Lamark.
         """
         counter=0
         for individual in generation:
             counter += 1
             print("individual {}/{}".format(counter, len(generation)))
-            individual = self.greedy_optimization( individual )
-
-
-    def greedy_optimization(self, individual):
-        pass
+            individual = super().greedy_optimization( individual )

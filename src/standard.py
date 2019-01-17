@@ -27,4 +27,4 @@ class Standard(GeneticAlgorithm):
         Calculate the fitness of each individual on the generation
         """
         for individual in generation:
-            super().calculate_individual_fitness( individual )
+            individual.fitness = super().calculate_individual_fitness(individual)
