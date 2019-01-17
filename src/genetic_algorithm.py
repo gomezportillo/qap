@@ -3,6 +3,7 @@ Parent class of the rest of the algorithms holding its variables
 """
 
 import os
+import sys
 import random
 from copy import deepcopy
 
@@ -280,6 +281,20 @@ class GeneticAlgorithm:
         print("Generation size: ", self.GENERATION_SIZE)
         print("Fitness of the final best individual: ", best_one.fitness)
         print("Chromosomes:\n", best_one.chromosomes )
+
+
+    def save_to_file(self, best_one):
+        """
+        Redirects the stdout to a file and saves the results
+        """
+        orig_stdout = sys.stdout
+        f = open('result.txt', 'w')
+        sys.stdout = f
+
+        self.print_result( best_one )
+
+        sys.stdout = orig_stdout
+        f.close()
 
 
     def check_fitness(self, fitness):

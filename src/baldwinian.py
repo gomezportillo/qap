@@ -19,6 +19,7 @@ class Baldwinian(GeneticAlgorithm):
         """
         best_one = super().execute( datafile )
         super().print_result( best_one )
+        super().save_to_file( best_one )
         return best_one
 
 
