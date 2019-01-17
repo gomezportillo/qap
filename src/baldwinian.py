@@ -58,7 +58,7 @@ class Baldwinian(GeneticAlgorithm):
                 T.chromosomes[j] = S.chromosomes[i]
 
                 # super().calculate_individual_fitness( T )
-                self.calculate_fitness_after_swap( T, i, j )
+                self.calculate_fitness_after_swap( S, T, i, j )
 
                 if T < S:
                     S = deepcopy( T )
@@ -66,36 +66,48 @@ class Baldwinian(GeneticAlgorithm):
         return S
 
 
-    def calculate_fitness_after_swap(self, T, i, j):
+    def calculate_fitness_after_swap(self, S, T, i, j):
         """
         Instead of calculating again the whole fitness, it is only a matter of
-        calculing the chromosomes that have been changed.
-        Complexity reduced from n^2 to 2n
+        calculing the chromosomes that have been changed, reducing complexity
+        from n^2 to 2n
         """
         new_fitness = T.fitness
+        chrom_S_i = S.chromosomes[i]
+        chrom_S_j = S.chromosomes[j]
+        chrom_T_i = T.chromosomes[i]
+        chrom_T_j = T.chromosomes[j]
 
-        # recalculate i
-        chrom_new_i = T.chromosomes[i]
-        chrom_old_i = T.chromosomes[j]
-        for aux_j in range(self.problem_size):
-            chrom_j = T.chromosomes[aux_j]
+        for k in range(self.problem_size):
+            chrom_S_k = S.chromosomes[k]
+            chrom_T_k = T.chromosomes[k]
 
-            new_fitness -= self.flow_matrix[j][i] * \
-                           self.distance_matrix[chrom_old_i][chrom_j]
+            # recalculate i
+            new_fitness -= self.flow_matrix[i][k] * \
+                           self.distance_matrix[chrom_S_i][chrom_S_k]
 
-            new_fitness += self.flow_matrix[i][j] * \
-                           self.distance_matrix[chrom_new_i][chrom_j]
+            new_fitness -= self.flow_matrix[i][k] * \
+                           self.distance_matrix[chrom_T_i][chrom_T_k]
 
-        # recalculate j
-        chrom_new_j = T.chromosomes[j]
-        chrom_old_j = T.chromosomes[i]
-        for aux_i in range(self.problem_size):
-            chrom_i = T.chromosomes[aux_i]
+            # recalculate j
+            new_fitness -= self.flow_matrix[j][k] * \
+                           self.distance_matrix[chrom_S_j][chrom_S_k]
 
-            new_fitness -= self.flow_matrix[j][i] * \
-                           self.distance_matrix[chrom_i][chrom_old_j]
+            new_fitness += self.flow_matrix[j][k] * \
+                           self.distance_matrix[chrom_T_j][chrom_T_k]
 
-            new_fitness += self.flow_matrix[i][j] * \
-                           self.distance_matrix[chrom_i][chrom_new_j]
+            # recalculate the rest of the values of the loop
+            if k not in [i, j]:
+                # recalculate i
+                new_fitness -= self.flow_matrix[k][i] * \
+                               self.distance_matrix[chrom_S_k][chrom_S_i]
 
-        T.fitness = new_fitness
+                new_fitness += self.flow_matrix[k][i] * \
+                               self.distance_matrix[chrom_T_k][chrom_T_i]
+
+                # recalculate j
+                new_fitness -= self.flow_matrix[k][j] * \
+                               self.distance_matrix[chrom_S_k][chrom_S_j]
+
+                new_fitness += self.flow_matrix[k][j] * \
+                               self.distance_matrix[chrom_T_k][chrom_T_j]

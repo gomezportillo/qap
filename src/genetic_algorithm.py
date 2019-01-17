@@ -189,12 +189,10 @@ class GeneticAlgorithm:
 
                 new_fitness += self.flow_matrix[i][j] * \
                                self.distance_matrix[chrom_i][chrom_j]
+
+        self.check_fitness( new_fitness )
         individual.fitness = new_fitness
 
-        # Just ckecking that the fitness is not greater than the possible maximum
-        if self.filename == 'tai256c.dat' and new_fitness < 44095032:
-            raise Exception("Fitness cannot be lesser than 44095032 on file \
-                             tai256c, current ", new_fitness)
 
 
     def print_result(self, best_one):
@@ -209,3 +207,12 @@ class GeneticAlgorithm:
         print("Generation size: ", self.GENERATION_SIZE)
         print("Fitness of the final best individual: ", best_one.fitness)
         print("Chromosomes:\n", best_one.chromosomes )
+
+
+    def check_fitness(self, fitness):
+        """
+        Check the fitness is not lesser than the possible value
+        """
+        if self.filename == 'tai256c.dat' and fitness < 44095032:
+            raise Exception("Fitness cannot be lesser than 44095032 on file \
+                             tai256c, current ", fitness)
