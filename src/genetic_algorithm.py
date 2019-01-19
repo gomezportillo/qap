@@ -19,18 +19,28 @@ class GeneticAlgorithm:
         """
         Fixed variables
         """
-        self.GENERATION_SIZE       = 50
-        self.NUMBER_OF_GENERATIONS = 250
-        self.MAX_NUMBER_REPETITION_BEST_ONE = 30
+        self.GENERATION_SIZE       = 60
+        self.NUMBER_OF_GENERATIONS = 100
+        self.MAX_NUMBER_REPETITION_BEST_ONE = 20
         """
-        Changing variables
+        Problem variables
         """
         self.problem_size    = -1
         self.flow_matrix     = []
         self.distance_matrix = []
 
+        """
+        Counts the number of times the best individual of a generation is
+        repeated to reinitialise it
+        """
         self.last_best_one = Individual(0)
         self.repetition_best_one = 0
+
+        """
+        Stores the best one of each generation to (manually) make a graph
+        """
+        self.bests = []
+
 
     def load(self, filename):
         """
@@ -154,7 +164,6 @@ class GeneticAlgorithm:
                 new_generation.append( child1 )
                 new_generation.append( child2 )
 
-
             """
             Pops out the worst one of the current generation and inserts in
             its place the best one of the previous generation
@@ -174,6 +183,8 @@ class GeneticAlgorithm:
             """
             best_one = min( self.current_generation )
             self.check_best_one_from_generation( best_one )
+
+            self.bests.append(best_one)
 
         best_one = min( self.current_generation )
         return best_one
@@ -304,7 +315,7 @@ class GeneticAlgorithm:
         """
         self.current_generation = self.create_generation()
         self.calculate_fitness( self.current_generation )
-        self.current_generation.pop()
+        self.current_generation.pop(0)
         self.current_generation.append(best_one)
 
 

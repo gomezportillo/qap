@@ -1,35 +1,25 @@
 # Solving a Quadratic Assignment Problem using genetic algorithms in Python3
 
-The objective of this practice is to solve a typical optimization problem using evolutionary computation techniques. Several variants of evolutionary algorithms should be implemented to solve the problem of quadratic assignment, including at least the variants described in this practice guide.
+The objective of this practice is to solve a quadratic optimization problem using evolutionary computation techniques. Several variants of evolutionary algorithms have been implemented in order to to solve the problem of quadratic assignment, in addition to a couple of optimization techniques.
 
-## Best solution so far
+## Comparation between all three algoritms
 
-The best solution obtained with the dataset `tai256c.dat` is the following
+![Comparacion](doc/graph.png)
 
-### Standard algorithm
+* **Number of generation.** 100
+* **Population size.** 60
+* **Maximun number of repetition of the best individual.** 20
+* **Individual mutation probability.** 50%
+* **Chromosome mutation probability.** 5%
 
-| Operator               | Value |
-|------------------------|-----------|
-| Recombination operator | Crossover |
-| Mutation operator      | Index swap |
-| Replacement mechanism  | Elitist |
-| Problem size           | 256 |
-| Number of generations  | 1000 |
-| Generation size        | 50 |
-| Execution time         | 1010.266s |
-| Fitness of the final best individual  | 48392494 |
-| List of chromosomes    | [154, 232, 51, 141, 83, 221, 11, 203, 197, 170, 148, 145, 210, 27, 123, 62, 184, 103, 16, 153, 146, 97, 214, 164, 79, 58, 4, 151, 117, 199, 71, 34, 60, 75, 243, 70, 94, 192, 10, 41, 66, 120, 37, 78, 249, 174, 128, 229, 1, 46, 125, 176, 217, 224, 223, 56, 15, 21, 64, 171, 252, 231, 122, 235, 3, 116, 228, 188, 113, 89, 185, 182, 22, 127, 134, 32, 180, 43, 179, 8, 91, 13, 206, 102, 254, 68, 77, 20, 161, 241, 158, 25, 222, 49, 14, 135, 42, 109, 163, 152, 162, 175, 131, 86, 63, 212, 45, 136, 150, 87, 129, 126, 100, 219, 9, 240, 53, 99, 245, 114, 30, 90, 55, 198, 124, 193, 69, 132, 226, 98, 215, 242, 105, 108, 187, 0, 119, 82, 6, 165, 88, 137, 48, 107, 59, 95, 181, 159, 208, 237, 7, 93, 65, 39, 118, 247, 28, 248, 35, 167, 160, 191, 227, 52, 251, 31, 44, 218, 67, 54, 239, 121, 194, 50, 202, 139, 80, 236, 104, 12, 173, 189, 140, 149, 195, 33, 138, 169, 112, 115, 47, 205, 111, 144, 19, 29, 23, 200, 101, 76, 234, 216, 18, 172, 220, 209, 5, 72, 143, 96, 106, 81, 177, 2, 61, 253, 155, 211, 73, 156, 17, 84, 246, 196, 233, 36, 24, 157, 74, 40, 207, 213, 147, 230, 204, 201, 110, 190, 183, 166, 244, 92, 26, 238, 133, 57, 85, 225, 255, 38, 250, 142, 178, 168, 130, 186] |
+## Execution output
 
-### Baldwinian algorithm
+![Console output](doc/console-output.gif)
 
-| Operator               | Value |
-|------------------------|-----------|
-| Recombination operator | Crossover |
-| Mutation operator      | Index swap |
-| Replacement mechanism  | Elitist |
-| Problem size           | 256 |
-| Number of generations  |  |
-| Generation size        |  |
-| Execution time         |  |
-| Fitness of the final best individual  |  |
-| List of chromosomes    |  |
+## Results
+
+Currently, the best results has been obtained using the **lamarckian algorithm**. It has a fitness of `46634000` and its chromosomes are
+
+```
+[169, 56, 148, 224, 235, 32, 12, 250, 103, 243, 50, 65, 150, 192, 60, 254, 214, 147, 255, 173, 95, 241, 76, 45, 137, 26, 191, 167, 126, 84, 248, 125, 101, 201, 186, 58, 245, 199, 88, 4, 17, 228, 107, 178, 0, 180, 197, 226, 23, 31, 53, 156, 110, 62, 217, 68, 105, 122, 203, 188, 206, 81, 161, 189, 253, 54, 159, 165, 129, 93, 231, 51, 18, 43, 130, 135, 212, 116, 154, 72, 112, 86, 21, 160, 221, 9, 90, 118, 98, 79, 184, 193, 213, 215, 5, 89, 66, 113, 70, 82, 151, 67, 171, 209, 97, 227, 195, 142, 102, 205, 20, 219, 111, 61, 237, 96, 52, 49, 174, 7, 211, 37, 69, 64, 104, 223, 55, 15, 200, 41, 247, 157, 119, 74, 39, 35, 181, 216, 220, 128, 27, 6, 106, 11, 34, 141, 179, 83, 131, 204, 230, 194, 40, 145, 138, 46, 77, 59, 10, 28, 225, 244, 120, 187, 190, 149, 71, 196, 42, 123, 182, 47, 172, 152, 121, 124, 198, 36, 94, 78, 164, 99, 146, 218, 24, 87, 117, 13, 44, 249, 108, 14, 239, 242, 234, 33, 85, 163, 1, 238, 75, 8, 251, 38, 166, 229, 185, 127, 240, 162, 202, 3, 233, 246, 144, 73, 236, 133, 153, 57, 30, 155, 177, 115, 140, 222, 183, 109, 100, 176, 19, 16, 232, 158, 168, 207, 134, 63, 208, 136, 29, 132, 170, 252, 92, 91, 48, 2, 210, 143, 175, 114, 80, 139, 22, 25]
+```
