@@ -2,6 +2,8 @@
 
 The objective of this practice is to solve a quadratic optimization problem using evolutionary computation techniques. Several variants of evolutionary algorithms have been implemented in order to to solve the problem of quadratic assignment, in addition to a couple of optimization techniques.
 
+* [Documentation](doc/documentation.pdf)
+
 ## Comparation between all three algoritms
 
 ![Comparacion](doc/graph.png)
