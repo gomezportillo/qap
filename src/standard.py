@@ -19,7 +19,8 @@ class Standard(GeneticAlgorithm):
         """
         best_one = super().execute( datafile )
         super().print_result( best_one )
-        super().save_to_file( best_one )
+        super().save_to_file( best_one, 0 )
+
         return best_one
 
 

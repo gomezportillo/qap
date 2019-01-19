@@ -19,9 +19,9 @@ class GeneticAlgorithm:
         """
         Fixed variables
         """
-        self.GENERATION_SIZE       = 25
-        self.NUMBER_OF_GENERATIONS = 500
-
+        self.GENERATION_SIZE       = 50
+        self.NUMBER_OF_GENERATIONS = 250
+        self.MAX_NUMBER_REPETITION_BEST_ONE = 30
         """
         Changing variables
         """
@@ -29,6 +29,8 @@ class GeneticAlgorithm:
         self.flow_matrix     = []
         self.distance_matrix = []
 
+        self.last_best_one = Individual(0)
+        self.repetition_best_one = 0
 
     def load(self, filename):
         """
@@ -134,7 +136,7 @@ class GeneticAlgorithm:
         self.calculate_fitness( self.current_generation )
 
         for i in range( self.NUMBER_OF_GENERATIONS ):
-            print("Executing generation {}/{}...".format(i+1, self.NUMBER_OF_GENERATIONS), end="\r")
+            print("Executing generation {}/{}... Best {}".format(i+1, self.NUMBER_OF_GENERATIONS, self.last_best_one.fitness), end="\r")
 
             new_generation = []
             for j in range( 0, int(self.GENERATION_SIZE), 2 ): # step = 2
@@ -165,6 +167,13 @@ class GeneticAlgorithm:
             self.current_generation = new_generation
 
             self.calculate_fitness( self.current_generation )
+
+            """
+            Check the best one is not stuck being repeated over generations.
+            Otherwise, reinitialise the population keeping the best one
+            """
+            best_one = min( self.current_generation )
+            self.check_best_one_from_generation( best_one )
 
         best_one = min( self.current_generation )
         return best_one
@@ -269,6 +278,36 @@ class GeneticAlgorithm:
                 new_fitness += self.flow_matrix[k][j] * \
                                self.distance_matrix[chrom_T_k][chrom_T_j]
 
+
+    def check_best_one_from_generation(self, best_one):
+        """
+        Check the best one is not stuck being repeated over generations.
+        Otherwise, reinitialise the population keeping the best one
+        """
+        if best_one == self.last_best_one:
+            self.repetition_best_one += 1
+            if self.repetition_best_one > self.MAX_NUMBER_REPETITION_BEST_ONE:
+                print("\nStuck population! Best one {}. Reinitialising...".format(best_one.fitness))
+                self.reinitialise_population( best_one )
+                self.repetition_best_one = 0
+
+        else:
+            self.repetition_best_one = 0
+
+        self.last_best_one = best_one
+
+
+    def reinitialise_population(self, best_one):
+        """
+        Generates another random generation, pops one individual at random and
+        inserts the best one from the previous generation
+        """
+        self.current_generation = self.create_generation()
+        self.calculate_fitness( self.current_generation )
+        self.current_generation.pop()
+        self.current_generation.append(best_one)
+
+
     def print_result(self, best_one):
         """
         Prints the final result.
@@ -283,12 +322,15 @@ class GeneticAlgorithm:
         print("Chromosomes:\n", best_one.chromosomes )
 
 
-    def save_to_file(self, best_one):
+    def save_to_file(self, best_one, i):
         """
         Redirects the stdout to a file and saves the results
         """
+        filename = 'result-{}.txt'.format(i)
+        filename = os.path.join('results', filename)
+        f = open( filename, 'w')
+
         orig_stdout = sys.stdout
-        f = open('result.txt', 'w')
         sys.stdout = f
 
         self.print_result( best_one )

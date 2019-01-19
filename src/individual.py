@@ -5,8 +5,8 @@ import random
 class Individual:
 
     def __init__(self, size):
-        self.INDIVIDUAL_MUTATION_PROBABILITY = 0.8
-        self.GENE_MUTATION_PROBABILITY       = 0.2
+        self.INDIVIDUAL_MUTATION_PROBABILITY = 0.5
+        self.GENE_MUTATION_PROBABILITY       = 0.05
 
         self.size    = size
         self.fitness = math.inf
